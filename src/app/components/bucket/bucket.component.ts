@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { groceryAction } from '../../store/actions/grocery.action';
 import { GroceryService } from '../../grocery.service';
+import { Grocery } from '../../../models/grocery.model';
 
 
 @Component({
@@ -18,11 +19,8 @@ export class BucketComponent {
 
    myBucket$?:Observable<Bucket[]> = this.store.select('bucket')
 
-   constructor(private groceryService: GroceryService, private store: Store<{ bucket: Bucket[] }>) {
-    this.groceryService.fetchAllGroceries().subscribe(data => {
-      this.store.dispatch(groceryAction.loadGrocerySuccess({ payload: data }));
-    });
-    
+   constructor(private store: Store<{ bucket: Bucket[] , groceries: Grocery[] }>) {
+    this.store.dispatch(groceryAction.loadGroceries())
    }
 
 }
