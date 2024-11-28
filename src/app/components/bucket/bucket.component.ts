@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Bucket } from '../../../models/bucket.model';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
 
 
 @Component({
@@ -13,6 +14,8 @@ import { CommonModule } from '@angular/common';
 })
 export class BucketComponent {
 
-   myBucket$?:Observable<Bucket[]>; 
+   myBucket$?:Observable<Bucket[]> = this.store.select('bucket')
+
+   constructor(private store: Store<{ bucket: Bucket[] }>) {}
 
 }
