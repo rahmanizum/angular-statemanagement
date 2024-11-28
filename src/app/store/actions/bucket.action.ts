@@ -7,5 +7,5 @@ export const  AddtoBucket = createAction(
     )
 export const RemoveFromBucket = createAction(
     '[Bucket] Remove From Bucket',
-     props<{payload:Bucket}>()
+     props<{payload:Partial<Bucket>}>()
     )
