@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { Bucket } from '../../../models/bucket.model';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
+import { groceryAction } from '../../store/actions/grocery.action';
+import { GroceryService } from '../../grocery.service';
 
 
 @Component({
@@ -16,6 +18,11 @@ export class BucketComponent {
 
    myBucket$?:Observable<Bucket[]> = this.store.select('bucket')
 
-   constructor(private store: Store<{ bucket: Bucket[] }>) {}
+   constructor(private groceryService: GroceryService, private store: Store<{ bucket: Bucket[] }>) {
+    this.groceryService.fetchAllGroceries().subscribe(data => {
+      this.store.dispatch(groceryAction.loadGrocerySuccess({ payload: data }));
+    });
+    
+   }
 
 }
