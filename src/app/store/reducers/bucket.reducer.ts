@@ -1,11 +1,11 @@
 import { createReducer, on } from "@ngrx/store";
 import { Bucket } from "../../../models/bucket.model";
-import { AddtoBucket, RemoveFromBucket } from "../actions/bucket.action";
+import { bucketActions } from "../actions/bucket.action";
 
 const initialState : Bucket[] = []
 
 export const bucketReducer = createReducer(initialState,
-    on(AddtoBucket, (state,action) => {
+    on(bucketActions.addToBucket, (state,action) => {
         const bucketItem = state.find(item => item.id === action.payload.id);
         if(bucketItem){
             return state.map(item => {
@@ -20,7 +20,7 @@ export const bucketReducer = createReducer(initialState,
         }
         return [...state,action.payload]
     }),
-    on(RemoveFromBucket,(state,action)=>{
+    on(bucketActions.removeFromBucket,(state,action)=>{
         const bucketItem = state.find(item => item.id === action.payload.id);
         if(bucketItem && bucketItem.quantity > 1){
             return state.map(item => {

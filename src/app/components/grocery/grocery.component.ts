@@ -3,42 +3,35 @@ import { map, Observable } from 'rxjs';
 import { Grocery } from '../../../models/grocery.model';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { AddtoBucket, RemoveFromBucket } from '../../store/actions/bucket.action';
-
+import { bucketActions } from '../../store/actions/bucket.action';
 
 @Component({
   selector: 'app-grocery',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './grocery.component.html',
-  styleUrl: './grocery.component.css'
+  styleUrl: './grocery.component.css',
 })
 export class GroceryComponent {
-  groceries$?:Observable<Grocery[]> = this.store.select('groceries')
+  groceries$?: Observable<Grocery[]> = this.store.select('groceries');
 
-  constructor(private store : Store<{groceries:Grocery[]}>){
+  constructor(private store: Store<{ groceries: Grocery[] }>) {}
 
-  }
+  onTypeChange(event: Event) {}
 
-  onTypeChange(event: Event){
-
-  }
-
-
-  increment(item:Grocery){
+  increment(item: Grocery) {
     const payload = {
-      id:item.id,
-      name:item.name,
-      quantity:1
-    }
-    this.store.dispatch(AddtoBucket({payload}))
+      id: item.id,
+      name: item.name,
+      quantity: 1,
+    };
+    this.store.dispatch(bucketActions.addToBucket({ payload }));
   }
-  decrement(item:Grocery){
+  decrement(item: Grocery) {
     const payload = {
-      id:item.id,
-      name:item.name
-    }
-    this.store.dispatch(RemoveFromBucket({payload}))
+      id: item.id,
+      name: item.name,
+    };
+    this.store.dispatch(bucketActions.removeFromBucket({ payload }));
   }
-
 }
