@@ -4,6 +4,7 @@ import { Grocery } from '../../../models/grocery.model';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { bucketActions } from '../../store/actions/bucket.action';
+import { selectGroceries, selectGroceriesByType } from '../../store/selectors/grocery.selector';
 
 @Component({
   selector: 'app-grocery',
@@ -13,11 +14,14 @@ import { bucketActions } from '../../store/actions/bucket.action';
   styleUrl: './grocery.component.css',
 })
 export class GroceryComponent {
-  groceries$?: Observable<Grocery[]> = this.store.select('groceries');
+  groceries$?: Observable<Grocery[]> = this.store.select(selectGroceries);
 
   constructor(private store: Store<{ groceries: Grocery[] }>) {}
 
-  onTypeChange(event: Event) {}
+  onTypeChange(event: Event) {
+    const type = (event.target as HTMLSelectElement).value;
+    this.groceries$ = this.store.select(selectGroceriesByType(type));
+  }
 
   increment(item: Grocery) {
     const payload = {
