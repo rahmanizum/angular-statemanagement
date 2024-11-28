@@ -1,5 +1,5 @@
 import { Component, Signal } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Grocery } from '../../../models/grocery.model';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
@@ -17,7 +17,9 @@ export class GroceryComponent {
 
   constructor(private store : Store<{groceries:Grocery[]}>){
     this.groceries$ = store.select('groceries')
-    this.groceries$.subscribe((res)=>{
+    this.groceries$.pipe(
+      map(groceries => groceries.filter(grocery => grocery.type === 'fruit'))
+    ).subscribe((res)=>{
       console.log(res)
     })
   }
