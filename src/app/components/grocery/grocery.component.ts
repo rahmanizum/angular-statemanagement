@@ -13,15 +13,10 @@ import { Store } from '@ngrx/store';
   styleUrl: './grocery.component.css'
 })
 export class GroceryComponent {
-  groceries$?:Observable<Grocery[]>;
+  groceries$?:Observable<Grocery[]> = this.store.select('groceries')
 
   constructor(private store : Store<{groceries:Grocery[]}>){
-    this.groceries$ = store.select('groceries')
-    this.groceries$.pipe(
-      map(groceries => groceries.filter(grocery => grocery.type === 'fruit'))
-    ).subscribe((res)=>{
-      console.log(res)
-    })
+
   }
 
   onTypeChange(event: Event){
