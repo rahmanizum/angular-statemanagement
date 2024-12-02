@@ -19,8 +19,6 @@ export class BucketComponent {
 
    myBucket$?:Observable<Bucket[]> = this.store.select('bucket')
 
-   constructor(private store: Store<{ bucket: Bucket[] , groceries: Grocery[] }>) {
-    this.store.dispatch(groceryAction.loadGroceries())
-   }
+   constructor(private store: Store<{ bucket: Bucket[]}>) {}
 
 }
